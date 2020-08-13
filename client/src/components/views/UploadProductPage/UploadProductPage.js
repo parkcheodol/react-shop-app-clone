@@ -12,7 +12,8 @@ const Category = [
     { key: 2, value: "Top" },
     { key: 3, value: "Bottom" },
     { key: 4, value: "Shoes" },
-    { key: 5, value: "Acc" }
+    { key: 5, value: "Acc" },
+    { key: 6, value: "Cute" }
 ]
 
 function UploadProductPage() {
