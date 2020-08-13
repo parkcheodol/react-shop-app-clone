@@ -4,8 +4,9 @@ import { Icon } from 'antd'
 import axios from 'axios'
 
 // #2-4 DropZone
-function FileUpload() {
+function FileUpload(props) {
 
+    // #2-8 FileUpload Image 를 UploadPage 로 
     const [Images, setImages] = useState([])
 
     // #2-5 onDropFunction
@@ -24,6 +25,10 @@ function FileUpload() {
                     console.log(response.data)
                     // #2-6 7:00
                     setImages([...Images, response.data.filePath])
+
+                    // #2-8 이미지를 올렸을 때, state 변경되는 부분
+                    props.refreshFunction([...Images, response.data.filePath])
+
                 } else {
 
                     // console.log(response.data)
@@ -44,6 +49,10 @@ function FileUpload() {
         let newImages = [...Images]
         newImages.splice(currentIndex, 1)
         setImages(newImages)
+        
+        // #2-8 이미지 삭제할 때도 state 변경
+        props.refreshFunction(newImages)
+
     }
 
     return (

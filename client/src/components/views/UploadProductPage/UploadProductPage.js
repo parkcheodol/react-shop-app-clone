@@ -24,7 +24,7 @@ function UploadProductPage() {
     const [ProductDescription, setProductDescription] = useState("")
     const [ProductPrice, setProductPrice] = useState(0)
     const [ProductCategory, setProductCategory] = useState(1)
-    const [ProductImage, setProductImage] = useState([])
+    const [ProductImages, setProductImages] = useState([])
 
     
     const titleChangeHandler = (event) => {
@@ -43,6 +43,11 @@ function UploadProductPage() {
         setProductCategory(event.currentTarget.value)
     }
 
+    // #2-8 Images State 가져오는 func
+    const updateProductImages = (newImages) => {
+        setProductImages(newImages)
+    }
+
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
@@ -52,7 +57,7 @@ function UploadProductPage() {
             <Form> 
                 {/* DropZone */}
 
-                <FileUpload />
+                <FileUpload refreshFunction={updateProductImages} />
 
                 <br />
                 <br />
