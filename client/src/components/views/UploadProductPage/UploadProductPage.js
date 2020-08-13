@@ -4,6 +4,15 @@ import { Typography, Button, Form, Input } from 'antd';
 const { Title } = Typography;
 const { TextArea } = Input;
 
+// #2-3 Select Option
+const Category = [
+    { key: 1, value: "Outer" },
+    { key: 2, value: "Top" },
+    { key: 3, value: "Bottom" },
+    { key: 4, value: "Shoes" },
+    { key: 5, value: "Acc" }
+]
+
 function UploadProductPage() {
 
 
@@ -11,7 +20,7 @@ function UploadProductPage() {
     const [ProductTitle, setProductTitle] = useState("")
     const [ProductDescription, setProductDescription] = useState("")
     const [ProductPrice, setProductPrice] = useState(0)
-    const [ProductContinent, setProductContinent] = useState(1)
+    const [ProductCategory, setProductCategory] = useState(1)
     const [ProductImage, setProductImage] = useState([])
 
     
@@ -25,6 +34,10 @@ function UploadProductPage() {
 
     const priceChangeHandler = (event) => {
         setProductPrice(event.currentTarget.value)
+    }
+
+    const categoryChangeHandler = (event) => {
+        setProductCategory(event.currentTarget.value)
     }
 
     return (
@@ -49,8 +62,13 @@ function UploadProductPage() {
                 <Input type="number" onChange={priceChangeHandler} value={ProductPrice} />
                 <br />
                 <br />
-                <select>
-                    <option></option>
+                <select onChange={categoryChangeHandler} value={ProductCategory}>
+
+                    {Category.map(item => (
+                        <option key={item.key} value={item.key}> {item.value} </option>
+
+                    ))}
+
                 </select>
 
                 <br />
