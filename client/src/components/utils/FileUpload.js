@@ -26,14 +26,25 @@ function FileUpload() {
                     setImages([...Images, response.data.filePath])
                 } else {
 
-                    console.log(response.data)
+                    // console.log(response.data)
                     alert('파일 저장 실패')
                 }
             })
-
-
     }
 
+    // #2-7 Delete Image
+    const deleteHandler = (image) => {
+        
+        const currentIndex = Images.indexOf(image)
+        
+        // 클릭했을 때, 값 확인
+        console.log('currentIndex', currentIndex)
+
+        // #2-7 4:00 원리 설명
+        let newImages = [...Images]
+        newImages.splice(currentIndex, 1)
+        setImages(newImages)
+    }
 
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between'}}>
@@ -56,7 +67,7 @@ function FileUpload() {
 
                 {Images.map((image, index) => (
 
-                    <div key={index}>
+                    <div onClick={() => deleteHandler(image)} key={index}>
                         <img style={{ minWidth:'300px', width: '300px', height: '240px'}} src={`http://localhost:5000/${image}`}
                         />
                     </div>
