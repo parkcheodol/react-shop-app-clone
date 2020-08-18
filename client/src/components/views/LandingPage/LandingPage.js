@@ -20,6 +20,12 @@ function LandingPage() {
     // #3-5 7:15
     const [PostSize, setPostSize] = useState(0)
 
+    // #3-8 1:50
+    const [Filters, setFilters] = useState({
+        category: [],
+        price: []
+    })
+
     // #3-1 DB에 저장된 것을 가져오기
     useEffect(() => {
 
@@ -95,11 +101,31 @@ function LandingPage() {
 
     })
 
-    // #3-8 CheckBox #3
-    const handleFilters = () => {
-        
+    
+
+    // #3-8 CheckBox Filter #3
+    const handleFilters = (filters, type) => {
+
+        const newFilters = { ...Filters }
+
+        newFilters[type] = filters
+
+        showFilteredResults(newFilters)
     }
 
+    // #3-8 4:30
+    const showFilteredResults = (filters) => {
+        
+        let body = {
+            skip: 0,
+            limit: Limit,
+            filters: filters
+        }
+
+        getProducts(body)
+        setSkip(0)
+
+    }
 
     return (
         <div style={{ width: '75%', margin: '3rem auto' }}>
@@ -110,7 +136,7 @@ function LandingPage() {
             {/* Filter */}
 
             {/* CheckBox */}
-            <CheckBox list={category} /*handleFilters={filter => handleFilters(filters, "category")}*/ />
+            <CheckBox list={category} handleFilters={filters => handleFilters(filters, "category")} />
 
             {/* RadioBox */}
 

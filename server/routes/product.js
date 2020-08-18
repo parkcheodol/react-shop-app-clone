@@ -52,8 +52,21 @@ router.post('/products', (req, res) => {
   let limit = req.body.limit ? parseInt(req.body.limit) : 20;
   let skip = req.body.skip ? parseInt(req.body.skip) : 0;
 
+  // #3-8 7:00
+  let findArgs = {};
+  
+  for(let key in req.body.filters) {
+
+    if(req.body.filters[key].length > 0) {
+      findArgs[key] = req.body.filters[key];
+    }
+  }
+
+  // 확인
+  // console.log('findArgs', findArgs)
+
   // product collection 에 들어있는 모든 상품 정보 가져오기 (productInfo: 받아온 모든 정보)
-  Product.find()
+  Product.find(findArgs)
     .populate("writer")
     .skip(skip)
     .limit(limit)
