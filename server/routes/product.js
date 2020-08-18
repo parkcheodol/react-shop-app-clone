@@ -58,12 +58,26 @@ router.post('/products', (req, res) => {
   for(let key in req.body.filters) {
 
     if(req.body.filters[key].length > 0) {
-      findArgs[key] = req.body.filters[key];
+
+      // #3-10 6:30
+      
+      // key 가 price 인지 category 인지 확인
+      console.log('key', key) 
+
+      if(key === "price") {
+        findArgs[key] = {
+          $gte: req.body.filters[key][0], // Greater than equal
+          $lte: req.body.filters[key][1] // Less than equal
+        }
+      } else {
+        findArgs[key] = req.body.filters[key];
+      }
+      
     }
   }
 
   // 확인
-  // console.log('findArgs', findArgs)
+  //console.log('findArgs', findArgs)
 
   // product collection 에 들어있는 모든 상품 정보 가져오기 (productInfo: 받아온 모든 정보)
   Product.find(findArgs)

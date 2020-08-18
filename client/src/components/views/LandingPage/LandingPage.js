@@ -6,8 +6,10 @@ import Meta from 'antd/lib/card/Meta'
 // #3-3 
 import ImageSlider from '../../utils/ImageSlider';
 // #3-6
+import { category, price } from './Sections/Datas';
 import CheckBox from './Sections/CheckBox';
-import { category } from './Sections/Datas';
+// #3-9
+import RadioBox from './Sections/RadioBox'
 
 function LandingPage() {
 
@@ -110,7 +112,15 @@ function LandingPage() {
 
         newFilters[type] = filters
 
+        // console.log('filters', filters)
+        // #3-9
+        if (type === "price") {
+            let priceValues = handlePrice(filters)
+            newFilters[type] = priceValues
+        }
+
         showFilteredResults(newFilters)
+        setFilters(filters)
     }
 
     // #3-8 4:30
@@ -127,6 +137,20 @@ function LandingPage() {
 
     }
 
+    // #3-10 2:50
+    const handlePrice = (value) => {
+        const data = price;
+        let array = [];
+
+        for (let key in data) {
+
+            if(data[key]._id === parseInt(value, 10)) {
+                array = data[key].array;
+            }
+        }
+        return array;
+    }
+
     return (
         <div style={{ width: '75%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
@@ -135,11 +159,16 @@ function LandingPage() {
             
             {/* Filter */}
 
-            {/* CheckBox */}
-            <CheckBox list={category} handleFilters={filters => handleFilters(filters, "category")} />
-
-            {/* RadioBox */}
-
+            <Row gutter={[16, 16]}>
+                <Col lg={12} xs={24}>
+                    {/* CheckBox */}
+                    <CheckBox list={category} handleFilters={filters => handleFilters(filters, "category")} />
+                </Col>
+                <Col lg={12} xs={24}>
+                    {/* RadioBox */}
+                    <RadioBox list={price} handleFilters={filters => handleFilters(filters, "price")} />
+                </Col>
+            </Row>
 
             {/* Search */}
 
