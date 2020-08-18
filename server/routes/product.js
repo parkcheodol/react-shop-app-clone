@@ -51,6 +51,8 @@ router.post('/products', (req, res) => {
   // #3-4 6:00
   let limit = req.body.limit ? parseInt(req.body.limit) : 20;
   let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+  // #3-12 4:00
+  let term = req.body.searchTerm
 
   // #3-8 7:00
   let findArgs = {};
@@ -79,15 +81,28 @@ router.post('/products', (req, res) => {
   // 확인
   //console.log('findArgs', findArgs)
 
-  // product collection 에 들어있는 모든 상품 정보 가져오기 (productInfo: 받아온 모든 정보)
-  Product.find(findArgs)
-    .populate("writer")
-    .skip(skip)
-    .limit(limit)
-    .exec((err, productInfo) => {
-      if(err) return res.status(400).json({ success: false, err })
-      return res.status(200).json({ success: true, productInfo, postSize: productInfo.length })
-    })
+  if (term) {
+    // #3-12 6:00 find 추가
+    Product.find(findArgs)
+      .find({ $text: { $search: term } })
+      .populate("writer")
+      .skip(skip)
+      .limit(limit)
+      .exec((err, productInfo) => {
+        if (err) return res.status(400).json({ success: false, err })
+        return res.status(200).json({ success: true, productInfo, postSize: productInfo.length })
+      })
+  } else {
+    // product collection 에 들어있는 모든 상품 정보 가져오기 (productInfo: 받아온 모든 정보)
+    Product.find(findArgs)
+      .populate("writer")
+      .skip(skip)
+      .limit(limit)
+      .exec((err, productInfo) => {
+        if (err) return res.status(400).json({ success: false, err })
+        return res.status(200).json({ success: true, productInfo, postSize: productInfo.length })
+      })
+  }
 
 })
 

@@ -36,7 +36,18 @@ const productSchema = mongoose.Schema({
     }
 }, { timestamps: true })
 
-
+// #3-12 8:30 
+// 검색 기능을 가능하게 하기 위해서
+// title 을 검색, title 을 더 중점적으로
+productSchema.index({
+    title: 'text',
+    description: 'text'
+}, {
+    weights: {
+        title: 5,
+        description: 1
+    }
+})
 
 const Product = mongoose.model('Product', productSchema);
 

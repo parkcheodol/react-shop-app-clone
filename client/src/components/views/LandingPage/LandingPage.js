@@ -10,6 +10,8 @@ import { category, price } from './Sections/Datas';
 import CheckBox from './Sections/CheckBox';
 // #3-9
 import RadioBox from './Sections/RadioBox'
+// #3-11
+import SearchFeature from './Sections/SearchFeature'
 
 function LandingPage() {
 
@@ -27,6 +29,9 @@ function LandingPage() {
         category: [],
         price: []
     })
+
+    // #3-11 8:30
+    const [SearchTerm, setSearchTerm] = useState("")
 
     // #3-1 DB에 저장된 것을 가져오기
     useEffect(() => {
@@ -151,6 +156,26 @@ function LandingPage() {
         return array;
     }
 
+    // #3-11 7:30
+    const updateSearchTerm = (newSearchTerm) => {
+
+        // setSearchTerm(newSearchTerm)
+
+        // #3-12
+        // 값에 맞게 backend 에서 처리
+        let body = {
+            skip: 0,
+            limit: Limit,
+            filters: Filters,
+            searchTerm: newSearchTerm
+        }
+
+        setSkip(0)
+        setSearchTerm(newSearchTerm)
+        getProducts(body)
+    
+    }
+
     return (
         <div style={{ width: '75%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
@@ -171,6 +196,11 @@ function LandingPage() {
             </Row>
 
             {/* Search */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '1rem auto' }}>
+                <SearchFeature 
+                    refreshFunction={updateSearchTerm}
+                />
+            </div>
 
             {/* Cards */}
 
