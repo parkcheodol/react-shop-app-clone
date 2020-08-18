@@ -13,7 +13,7 @@ function LandingPage() {
 
     // #3-4 4:30
     const [Skip, setSkip] = useState(0)
-    const [Limit, setLimit] = useState(8)
+    const [Limit, setLimit] = useState(4)
 
     // #3-5 7:15
     const [PostSize, setPostSize] = useState(0)
@@ -43,7 +43,7 @@ function LandingPage() {
                     console.log(response.data)
                     // #3-5 5:30
                     if(body.loadMore) {
-                        setProducts([...Products, response.data.productInfo])
+                        setProducts([...Products, ...response.data.productInfo])
                     } else {
                         setProducts(response.data.productInfo)
                     }
