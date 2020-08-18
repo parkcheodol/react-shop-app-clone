@@ -5,7 +5,9 @@ import { Icon, Col, Card, Row, Carousel } from 'antd';
 import Meta from 'antd/lib/card/Meta'
 // #3-3 
 import ImageSlider from '../../utils/ImageSlider';
-
+// #3-6
+import CheckBox from './Sections/CheckBox';
+import { category } from './Sections/Datas';
 
 function LandingPage() {
 
@@ -93,6 +95,12 @@ function LandingPage() {
 
     })
 
+    // #3-8 CheckBox #3
+    const handleFilters = () => {
+        
+    }
+
+
     return (
         <div style={{ width: '75%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
@@ -100,6 +108,12 @@ function LandingPage() {
             </div>
             
             {/* Filter */}
+
+            {/* CheckBox */}
+            <CheckBox list={category} /*handleFilters={filter => handleFilters(filters, "category")}*/ />
+
+            {/* RadioBox */}
+
 
             {/* Search */}
 
