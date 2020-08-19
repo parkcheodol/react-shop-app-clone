@@ -106,4 +106,24 @@ router.post('/products', (req, res) => {
 
 })
 
+// #4-1 10:00
+
+// axios.get(`/api/product/products_by_id?id=${productId}&type=single`)
+
+router.get('/products_by_id', (req, res) => {
+
+  // productId를 이용해 DB에서 productId와 같은 상품의 정보 가져오기
+
+  let type = req.query.type
+  let productId = req.query.id
+
+  Product.find({ _id: productId })
+    .populate('writer')
+    .exec((err, product) => {
+      if(err) return res.status(400).send(err)
+      return res.status(200).send({ success: true, product})
+    })
+})
+
+
 module.exports = router;
