@@ -18,6 +18,9 @@ router.get("/auth", auth, (req, res) => {
         lastname: req.user.lastname,
         role: req.user.role,
         image: req.user.image,
+        // #5-1 4:00
+        cart: req.user.cart,
+        history: req.user.history // 결제내역
     });
 });
 
