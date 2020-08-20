@@ -112,18 +112,32 @@ router.post('/products', (req, res) => {
 
 router.get('/products_by_id', (req, res) => {
 
+  let type = req.query.type
+  let productIds = req.query.id
+
+  // #5-2 13:00
+  if (type === "array") {
+
+    // id= 123123, 234234, 345345 를
+    // productIds = ['123123', '234234', '345345'] 이렇게 바꿔줌
+
+    let ids = req.query.id.split(',')
+    productIds = ids.map(item => {
+      return item
+    })
+  }
+
   // productId를 이용해 DB에서 productId와 같은 상품의 정보 가져오기
 
-  let type = req.query.type
-  let productId = req.query.id
-
-  Product.find({ _id: productId })
+  Product.find({ _id: {$in : productIds} })
     .populate('writer')
     .exec((err, product) => {
       if(err) return res.status(400).send(err)
-      return res.status(200).send({ success: true, product})
+      return res.status(200).json({ success: true, product})
     })
 })
+
+
 
 
 module.exports = router;
