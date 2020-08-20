@@ -18,14 +18,16 @@ function DetailProductPage(props) {
 
         axios.get(`/api/product/products_by_id?id=${productId}&type=single`)
             .then(response => {
-                if(response.data.success) {
+                /* if(response.data.success) {
                     // #4-1 13:55 어떤 결과값이 오는지 확인
                     console.log('response.data', response.data)
                     setProduct(response.data.product[0])
                 } else {
                     alert('상세정보 가져오기 실패')
-                }
+                } */
+                setProduct(response.data[0])
             })
+            .catch(err => alert(err))
 
     }, [])
 
