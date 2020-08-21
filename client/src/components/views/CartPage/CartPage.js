@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { getCartItems } from '../../../_actions/user_actions'
+import { getCartItems, removeCartItem } from '../../../_actions/user_actions'
 // #5-4
 import UserCardBlock from './Sections/UserCardBlock'
+import { Empty } from 'antd';
 
 // #5-2
 function CartPage(props) {
@@ -11,6 +12,9 @@ function CartPage(props) {
 
     // #5-6 카트 가격 합산
     const [Total, setTotal] = useState(0)
+
+    // #5-8
+    const [ShowTotal, setShowTotal] = useState(false)
     
     useEffect(() => {
 
@@ -21,7 +25,7 @@ function CartPage(props) {
         if (props.user.userData && props.user.userData.cart) {
             if(props.user.userData.cart.length > 0) {
                 props.user.userData.cart.forEach(item => {
-                    // console.log('item', item)
+                    console.log('item', item)
                     cartItems.push(item.id)
                 })
 
@@ -45,7 +49,23 @@ function CartPage(props) {
             total += parseInt(item.price, 10) * item.quantity
 
             setTotal(total)
+            setShowTotal(true)
         })
+    }
+
+    // #5-7 Remove Button
+    let removeFromCart = (productId) => {
+
+        dispatch(removeCartItem(productId))
+            .then(response => {
+                
+                // #5-8 삭제 후 처리
+                // console.log('response', response)
+
+                if (response.payload.productInfo.length <= 0) {
+                    setShowTotal(false)
+                }
+            })
     }
 
     return (
@@ -53,12 +73,20 @@ function CartPage(props) {
             <h1>Shopping Cart</h1>
 
             <div>
-                <UserCardBlock products={props.user.cartDetail} />
+                <UserCardBlock products={props.user.cartDetail} removeItem={removeFromCart} />
             </div>
 
-            <div style={{ marginTop: '3rem' }}>
-                <h2>Total Amount :${Total}</h2>
-            </div>
+            {ShowTotal ? 
+                <div style={{ marginTop: '3rem' }}>
+                    <h2>Total Amount :${Total}</h2>
+                </div>
+                :
+                <>
+                <br />
+                <Empty description={false} />
+                </>
+            }
+            
         </div>
     )
 }
