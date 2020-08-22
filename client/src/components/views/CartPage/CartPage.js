@@ -90,7 +90,13 @@ function CartPage(props) {
             }
 
             {/* Paypal button */}
-            <Paypal />
+
+            {ShowTotal &&
+                <Paypal
+                    total={Total}
+                />
+            
+            }
             
         </div>
     )
