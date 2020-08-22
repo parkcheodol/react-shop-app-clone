@@ -4,6 +4,8 @@ import { getCartItems, removeCartItem } from '../../../_actions/user_actions'
 // #5-4
 import UserCardBlock from './Sections/UserCardBlock'
 import { Empty } from 'antd';
+// #5-9
+import Paypal from '../../utils/Paypal'
 
 // #5-2
 function CartPage(props) {
@@ -86,6 +88,9 @@ function CartPage(props) {
                 <Empty description={false} />
                 </>
             }
+
+            {/* Paypal button */}
+            <Paypal />
             
         </div>
     )
