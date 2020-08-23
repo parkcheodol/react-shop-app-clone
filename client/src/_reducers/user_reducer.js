@@ -5,7 +5,8 @@ import {
     LOGOUT_USER,
     ADD_TO_CART,
     GET_CART_ITMES,
-    REMOVE_CART_ITEM
+    REMOVE_CART_ITEM,
+    ON_SUCCESS_BUY
 } from '../_actions/types';
  
 
@@ -28,6 +29,13 @@ export default function(state={},action){
                 ...state.userData, 
                 cart: action.payload.cart
             } }
+        case ON_SUCCESS_BUY:
+            return {
+                ...state, cartDetail: action.payload.cartDetail, 
+                userData: { 
+                    ...state.userData, cart: action.payload.cart 
+                }
+            }
         default:
             return state;
     }
